@@ -1,0 +1,16 @@
+# Bỏ qua thư mục node_modules và các tệp build
+node_modules/
+build/
+*.log
+.cache/
+
+# Bỏ qua môi trường và thông tin nhạy cảm
+.env
+
+# Bỏ qua các tệp cấu hình của hệ điều hành và IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Bỏ qua các tệp lock của npm
+package-lock.json
