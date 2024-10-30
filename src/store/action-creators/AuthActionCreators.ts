@@ -6,9 +6,9 @@ import { getEmailPasswordErrors } from '../../utils/utilities'
 import { getTwoFactorCodeErrors } from '../../utils/utilities'
 import { authActions } from '../reducers/AuthReducer'
 
-export const registration = createAsyncThunk('registration', async (authDto: IAuthDto, thunkApi) => {
+export const registration = createAsyncThunk('registration', async ({ authDto, deviceFingerprint } : {authDto: IAuthDto, deviceFingerprint: string}, thunkApi) => {
     try {
-        const response = await AuthService.registration(authDto)
+        const response = await AuthService.registration(authDto, deviceFingerprint)
 
         return response
     } catch (error: any) {

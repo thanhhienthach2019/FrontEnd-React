@@ -10,8 +10,9 @@ const App: FC = () => {
         <div>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Registration />} />
+                    <Route path="/" element={<Login />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Registration />} />
                     <Route path="/authorized_user" element={<AuthorizedUser />} />
                     <Route path="/*" element={<NotFound />} />
                 </Routes>

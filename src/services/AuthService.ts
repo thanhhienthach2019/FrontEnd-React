@@ -5,9 +5,13 @@ import { ITwoFactorLogin } from '../interfaces/ITwoFactorLoginDto'
 import { IUserData } from '../interfaces/IUserData'
 
 export class AuthService {
-    static registration = async (authDto: IAuthDto): Promise<IUserData> => {
+    static registration = async (authDto: IAuthDto, deviceFingerprint: string): Promise<IUserData> => {
         try {
-            const response = await defaultApi.post<IUserData>('Auth/Registration', authDto)
+            const response = await defaultApi.post<IUserData>('Auth/Registration', authDto, {
+                headers: {
+                    'device-fingerprint': deviceFingerprint,
+                },
+            })
 
             var data = response.data
 
