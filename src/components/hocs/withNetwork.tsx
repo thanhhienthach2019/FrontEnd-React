@@ -22,9 +22,9 @@ const withNetwork = (Comp: React.ComponentType<any>) => {
         }, [authState.isLoading, authState.isAuth, navigate, location.pathname]);
 
         // Kiểm tra trạng thái đang tải
-        if (authState.isLoading) {
-            return <Loader center content="Loading..." />;
-        }
+        // if (authState.isLoading) {
+        //     return <Loader center content="Loading..." />;
+        // }
 
         return <Comp authState={authState} dispatch={dispatch} />;
     };

@@ -63,6 +63,7 @@ export const refresh = () => async (dispatch: any) => {
     try {
         dispatch(authActions.refreshPending())
         const response = await AuthService.refresh()
+        // console.log(response);
         dispatch(authActions.refreshFulfilled(response))
     } catch (error) {
         dispatch(authActions.refreshRejected())

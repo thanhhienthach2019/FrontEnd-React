@@ -23,17 +23,30 @@ const Registration: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetwork
     // Hàm kiểm tra mật khẩu và xác nhận mật khẩu có trùng khớp
     const validatePasswordsMatch = (): boolean => {
         if (password !== confirmPassword) {
-            setMessage({ content: 'Mật khẩu và xác nhận mật khẩu không trùng khớp.', type: 'error' });
+            ToastUtils.error('Mật khẩu và xác nhận mật khẩu không trùng khớp')
             return false;
         }
         return true;
     };
+    const validatePassword = (password: string): boolean => {
+        const minLength = password.length >= 8; // Tối thiểu 8 ký tự
+        const hasUpperCase = /[A-Z]/.test(password); // Có ký tự chữ hoa
+        const hasLowerCase = /[a-z]/.test(password); // Có ký tự chữ thường
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password); // Có ký tự đặc biệt
+
+        return minLength && hasUpperCase && hasLowerCase && hasSpecialChar;
+    };
+
     const getDeviceFingerprint = async () => {
         const fp = await FingerprintJS.load();
         const result = await fp.get();
         return result.visitorId;
     };
     const handleRegister = async (): Promise<void> => {
+        if (!validatePassword(password)) {
+            ToastUtils.error('Mật khẩu phải có tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường và ký tự đặc biệt');
+            return;
+        }
         if (!validatePasswordsMatch()) return;
         const deviceFingerprint = await getDeviceFingerprint();
 
@@ -44,10 +57,8 @@ const Registration: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetwork
         dispatch(registration({ authDto, deviceFingerprint }))
         setIsLoading(true);
         try {
-            // Thực hiện logic đăng ký tại đây (gửi authDto đến API)
-            // Giả sử đăng ký thành công
             ToastUtils.success('Đăng ký thành công!');
-            navigate('/login'); // Chuyển đến trang đăng nhập sau khi đăng ký thành công
+            navigate('/login');
         } catch (error) {
             ToastUtils.error('Đã có lỗi xảy ra khi đăng ký');
         } finally {
@@ -55,19 +66,11 @@ const Registration: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetwork
         }
     };
 
-    // const reg = (): void => {
-    //     const authDto: IAuthDto = {
-    //         Email: login,
-    //         Password: password,            
-    //     }
-    //     dispatch(registration(authDto))
-    // }
-
-    // useEffect(() => {
-    //     if (authState.isAuth) {
-    //         navigate('/login')
-    //     }
-    // }, [navigate, authState.isAuth])
+    useEffect(() => {
+        if (!authState.isAuth) {
+            navigate('/login')
+        }
+    }, [navigate, authState.isAuth])
 
     return (
         <Container>

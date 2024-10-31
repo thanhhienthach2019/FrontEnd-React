@@ -73,7 +73,7 @@ export class AuthService {
             const response = await defaultApi.put<IUserData>('Auth/Refresh', accessToken)
 
             var data = response.data
-            console.log(data);
+            // console.log(data);
             localStorage.setItem('AccessToken', data.tokensData.accessJwt)
 
             return data

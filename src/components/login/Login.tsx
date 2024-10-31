@@ -72,16 +72,6 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
         return result.visitorId;
     };
 
-    const validatePassword = (password: string): boolean => {
-        const minLength = password.length >= 8; // Tối thiểu 8 ký tự
-        const hasUpperCase = /[A-Z]/.test(password); // Có ký tự chữ hoa
-        const hasLowerCase = /[a-z]/.test(password); // Có ký tự chữ thường
-        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password); // Có ký tự đặc biệt
-
-        return minLength && hasUpperCase && hasLowerCase && hasSpecialChar;
-    };
-
-
     const handleTwoFactorLogin = async (): Promise<void> => {
         setIsLoading(true);
         try {
@@ -95,10 +85,10 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
             if (twoFactorLog.fulfilled.match(resulTwoFactorAction)) {                                                                               
                 ToastUtils.success('Xác thực thành công');    
                 localStorage.setItem('AccessToken', tokensData.accessJwt)           
-                // setTimeout(() => {
-                //     navigate('/authorized_user');
-                // }, 1000);
-                // setisFactorLogin(true);
+                setTimeout(() => {
+                    navigate('/authorized_user');
+                }, 1000);
+                setisFactorLogin(true);
             } else {                
                 // console.error('Verification failed:', resulTwoFactorAction.payload);
                 ToastUtils.error('Xác nhận thất bại');
@@ -116,10 +106,6 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
     const log = async (): Promise<void> => {
         try {
             const deviceFingerprint = await getDeviceFingerprint();
-            // if (!validatePassword(password)) {
-            //     ToastUtils.error('Mật khẩu phải có tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường và ký tự đặc biệt');
-            //     return;
-            // }
             const authDto: IAuthDto = {
                 Email: login,
                 Password: password,                
@@ -136,9 +122,9 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
                 } else {                    
                     ToastUtils.success('Đăng nhập thành công');       
                     localStorage.setItem('AccessToken', tokensData.accessJwt)                                 
-                    // setTimeout(() => {
-                    //     navigate('/authorized_user');
-                    // }, 1000);
+                    setTimeout(() => {
+                        navigate('/authorized_user');
+                    }, 1000);
                     setIsLoggedIn(true);
                 }
 
@@ -156,11 +142,11 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
         }
     };
 
-    // useEffect(() => {
-    //     if (authState.isAuth) {
-    //         navigate('/authorized_user')
-    //     }
-    // }, [navigate, authState.isAuth])
+    useEffect(() => {
+        if (authState.isAuth) {
+            navigate('/authorized_user')
+        }
+    }, [navigate, authState.isAuth])
     // Convert seconds to minutes and seconds for display
     const minutes = Math.floor(remainingTime / 60);
     const seconds = remainingTime % 60;
