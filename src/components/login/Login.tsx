@@ -66,21 +66,14 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
         }
     }, [requiresTwoFactor]); // Chỉ chạy khi requiresTwoFactor thay đổi
 
-    const getDeviceFingerprint = async () => {
-        const fp = await FingerprintJS.load();
-        const result = await fp.get();
-        return result.visitorId;
-    };
-
     const handleTwoFactorLogin = async (): Promise<void> => {
         setIsLoading(true);
-        try {
-            const deviceFingerprint = await getDeviceFingerprint();
+        try {            
             const twofactor: ITwoFactorLogin = {
                 Email: login,
                 TwoFactorCode: twoFactorCode,                
             };
-            const resulTwoFactorAction = await dispatch(twoFactorLog({ twofactor, deviceFingerprint }));       
+            const resulTwoFactorAction = await dispatch(twoFactorLog({ twofactor }));       
             const { tokensData } = resulTwoFactorAction.payload;                     
             if (twoFactorLog.fulfilled.match(resulTwoFactorAction)) {                                                                               
                 ToastUtils.success('Xác thực thành công');    
@@ -105,14 +98,13 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
 
     const log = async (): Promise<void> => {
         try {
-            const deviceFingerprint = await getDeviceFingerprint();
             const authDto: IAuthDto = {
                 Email: login,
                 Password: password,                
             };
 
             setIsLoading(true);
-            const resultAction = await dispatch(signIn({ authDto, deviceFingerprint })); // Chờ đợi giá trị trả về            
+            const resultAction = await dispatch(signIn({ authDto})); // Chờ đợi giá trị trả về            
             if (signIn.fulfilled.match(resultAction)) {                
                 const { expiryTime, requiresTwoFactor, tokensData } = resultAction.payload;                                                                            
                 if (requiresTwoFactor) {
@@ -143,7 +135,7 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
     };
 
     useEffect(() => {
-        if (authState.isAuth) {
+        if (authState.isAuth && (isLoggedIn || isFactorLogin)) {
             navigate('/authorized_user')
         }
     }, [navigate, authState.isAuth])

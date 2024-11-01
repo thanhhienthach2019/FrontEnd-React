@@ -9,9 +9,9 @@ const withAuthorize = (Comp: React.ComponentType<any>) => {
         const dispatch = useAppDispatch()
         const navigate = useNavigate()
 
-        useEffect(() => {
-            dispatch(refresh())
-        }, [])
+        // useEffect(() => {
+        //     dispatch(refresh())
+        // }, [])        
 
         useEffect(() => {
             if (!authState.isAuth) {

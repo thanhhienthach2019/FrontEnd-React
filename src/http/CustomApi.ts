@@ -24,7 +24,7 @@ export const SetupCustomApi = (store: any): AxiosInstance => {
         (response) => response,
         async (error) => {
             const response = error.response
-            console.log(response);
+            // console.log(response);
             if (response && response?.status === 401 && !response._isRetry) {
                 response._isRetry = true
 

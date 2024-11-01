@@ -3,13 +3,15 @@ import defaultApi from '../http/DefaultApi'
 import { IAuthDto } from '../interfaces/IAuthDto'
 import { ITwoFactorLogin } from '../interfaces/ITwoFactorLoginDto'
 import { IUserData } from '../interfaces/IUserData'
+import { getDeviceFingerprint } from '../utils/fingerprintUtils'
 
 export class AuthService {
-    static registration = async (authDto: IAuthDto, deviceFingerprint: string): Promise<IUserData> => {
+
+    static registration = async (authDto: IAuthDto): Promise<IUserData> => {
         try {
             const response = await defaultApi.post<IUserData>('Auth/Registration', authDto, {
                 headers: {
-                    'device-fingerprint': deviceFingerprint,
+                    'device-fingerprint': await getDeviceFingerprint(),
                 },
             })
 
@@ -23,12 +25,12 @@ export class AuthService {
             throw error
         }
     }
-
-    static login = async (authDto: IAuthDto, deviceFingerprint: string): Promise<IUserData> => {
+    
+    static login = async (authDto: IAuthDto): Promise<IUserData> => {
         try {
             const response = await defaultApi.post<IUserData>('Auth/Login', authDto, {
                 headers: {
-                    'device-fingerprint': deviceFingerprint,
+                    'device-fingerprint': await getDeviceFingerprint(),
                 },
             });
             const data = response.data;
@@ -40,11 +42,11 @@ export class AuthService {
         }
     }
 
-    static twofactorlogin = async (twofactorDto: ITwoFactorLogin, deviceFingerprint: string): Promise<IUserData> => {
+    static twofactorlogin = async (twofactorDto: ITwoFactorLogin): Promise<IUserData> => {
         try {
             const response = await defaultApi.post<IUserData>('Auth/verify-2fa-login', twofactorDto, {
                 headers: {
-                    'device-fingerprint': deviceFingerprint,
+                    'device-fingerprint': await getDeviceFingerprint(),
                 },
             });
             const data = response.data;            
@@ -68,9 +70,13 @@ export class AuthService {
     }
 
     static refresh = async (): Promise<IUserData> => {
-        try {
+        try {            
             const accessToken = localStorage.getItem('AccessToken')
-            const response = await defaultApi.put<IUserData>('Auth/Refresh', accessToken)
+            const response = await defaultApi.put<IUserData>('Auth/Refresh', accessToken, {
+                headers: {
+                    'device-fingerprint': await getDeviceFingerprint(),
+                },
+            })
 
             var data = response.data
             // console.log(data);

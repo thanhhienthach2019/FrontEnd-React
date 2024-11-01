@@ -36,25 +36,19 @@ const Registration: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetwork
 
         return minLength && hasUpperCase && hasLowerCase && hasSpecialChar;
     };
-
-    const getDeviceFingerprint = async () => {
-        const fp = await FingerprintJS.load();
-        const result = await fp.get();
-        return result.visitorId;
-    };
+    
     const handleRegister = async (): Promise<void> => {
         if (!validatePassword(password)) {
             ToastUtils.error('Mật khẩu phải có tối thiểu 8 ký tự, bao gồm chữ hoa, chữ thường và ký tự đặc biệt');
             return;
         }
         if (!validatePasswordsMatch()) return;
-        const deviceFingerprint = await getDeviceFingerprint();
 
         const authDto: IAuthDto = {
             Email: email,
             Password: password,
         };
-        dispatch(registration({ authDto, deviceFingerprint }))
+        dispatch(registration({ authDto }))
         setIsLoading(true);
         try {
             ToastUtils.success('Đăng ký thành công!');

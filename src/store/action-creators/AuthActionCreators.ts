@@ -6,9 +6,9 @@ import { getEmailPasswordErrors } from '../../utils/utilities'
 import { getTwoFactorCodeErrors } from '../../utils/utilities'
 import { authActions } from '../reducers/AuthReducer'
 
-export const registration = createAsyncThunk('registration', async ({ authDto, deviceFingerprint } : {authDto: IAuthDto, deviceFingerprint: string}, thunkApi) => {
+export const registration = createAsyncThunk('registration', async ({ authDto } : {authDto: IAuthDto}, thunkApi) => {
     try {
-        const response = await AuthService.registration(authDto, deviceFingerprint)
+        const response = await AuthService.registration(authDto)
 
         return response
     } catch (error: any) {
@@ -22,9 +22,9 @@ export const registration = createAsyncThunk('registration', async ({ authDto, d
     }
 })
 
-export const signIn = createAsyncThunk('login', async ({ authDto, deviceFingerprint }: { authDto: IAuthDto; deviceFingerprint: string }, thunkApi) => {
+export const signIn = createAsyncThunk('login', async ({ authDto }: { authDto: IAuthDto }, thunkApi) => {
     try {
-        return await AuthService.login(authDto, deviceFingerprint);
+        return await AuthService.login(authDto);
     } catch (error: any) {
         const emailPasswordErrors = getEmailPasswordErrors(error);
 
@@ -38,9 +38,9 @@ export const signIn = createAsyncThunk('login', async ({ authDto, deviceFingerpr
 });
 
 
-export const twoFactorLog = createAsyncThunk('twofactorlog', async ({twofactor, deviceFingerprint}: {twofactor: ITwoFactorLogin, deviceFingerprint: string}, thunkApi) => {
+export const twoFactorLog = createAsyncThunk('twofactorlog', async ({twofactor}: {twofactor: ITwoFactorLogin}, thunkApi) => {
     try {
-        return await AuthService.twofactorlogin(twofactor, deviceFingerprint);
+        return await AuthService.twofactorlogin(twofactor);
     } catch (error: any) {
         const twoFactorErrors = getTwoFactorCodeErrors(error)
         if (twoFactorErrors !== '') {

@@ -2,6 +2,7 @@ const path = require('path');
 const TerserPlugin = require('terser-webpack-plugin');
 const JavaScriptObfuscator = require('webpack-obfuscator');
 const webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = {
     mode: 'production', // production-development
@@ -51,7 +52,8 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'), // Định nghĩa biến môi trường
+            'process.env.REACT_APP_SERVER_URL': JSON.stringify(process.env.REACT_APP_SERVER_URL),
+            'process.env.REACT_APP_CLIENT_URL': JSON.stringify(process.env.REACT_APP_CLIENT_URL),
         }),
     ],
     devServer: {
