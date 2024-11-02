@@ -62,7 +62,7 @@ export class AuthService {
         try {
             await customApi.delete<void>('Auth/Logout')
 
-            localStorage.removeItem('AccessToken')
+            localStorage.removeItem('_ACT_AUT')
         } catch (error: any) {
             console.error(error.response.data)
             throw error
@@ -71,7 +71,7 @@ export class AuthService {
 
     static refresh = async (): Promise<IUserData> => {
         try {            
-            const accessToken = localStorage.getItem('AccessToken')
+            const accessToken = localStorage.getItem('_ACT_AUT')
             const response = await defaultApi.put<IUserData>('Auth/Refresh', accessToken, {
                 headers: {
                     'device-fingerprint': await getDeviceFingerprint(),
@@ -80,7 +80,7 @@ export class AuthService {
 
             var data = response.data
             // console.log(data);
-            localStorage.setItem('AccessToken', data.tokensData.accessJwt)
+            localStorage.setItem('_ACT_AUT', data.tokensData.accessJwt)
 
             return data
         } catch (error: any) {

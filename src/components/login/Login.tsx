@@ -77,7 +77,7 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
             const { tokensData } = resulTwoFactorAction.payload;                     
             if (twoFactorLog.fulfilled.match(resulTwoFactorAction)) {                                                                               
                 ToastUtils.success('Xác thực thành công');    
-                localStorage.setItem('AccessToken', tokensData.accessJwt)           
+                localStorage.setItem('_ACT_AUT', tokensData.accessJwt)           
                 setTimeout(() => {
                     navigate('/authorized_user');
                 }, 1000);
@@ -113,7 +113,7 @@ const Login: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetworkProps) 
                     setExpiryTime(expiryTime);
                 } else {                    
                     ToastUtils.success('Đăng nhập thành công');       
-                    localStorage.setItem('AccessToken', tokensData.accessJwt)                                 
+                    localStorage.setItem('_ACT_AUT', tokensData.accessJwt)                                 
                     setTimeout(() => {
                         navigate('/authorized_user');
                     }, 1000);

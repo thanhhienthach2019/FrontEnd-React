@@ -1,0 +1,71 @@
+.cookie-modal {
+    border-radius: 10px; /* Bo tròn góc */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); /* Đổ bóng cho modal */
+    background: linear-gradient(135deg, #f0f4f8 0%, #d9e6f2 100%); /* Gradient màu nền */
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; /* Hiệu ứng cho modal */
+}
+
+.cookie-modal.open {
+    transform: scale(1.05); /* Tăng kích thước khi mở */
+    opacity: 1; /* Độ trong suốt */
+}
+
+.cookie-modal .rs-modal-header {    
+    color: white; /* Màu chữ tiêu đề */
+    font-weight: bold; /* Chữ đậm cho tiêu đề */
+    border-bottom: 2px solid #388E3C; /* Đường viền dưới tiêu đề */
+}
+
+.cookie-modal .rs-modal-title {
+    display: flex; /* Sắp xếp biểu tượng và tiêu đề ngang hàng */
+    align-items: center; /* Canh giữa dọc */
+    font-size: 20px; /* Kích thước chữ tiêu đề */
+}
+
+.cookie-modal .rs-modal-body {
+    font-size: 16px; /* Kích thước chữ trong body */
+    line-height: 1.6; /* Khoảng cách giữa các dòng */
+    padding: 20px; /* Padding cho body */
+    color: #333; /* Màu chữ trong body */
+}
+
+.cookie-modal .rs-modal-footer {
+    display: flex;
+    justify-content: space-between; /* Giãn cách các nút */
+    padding: 15px; /* Padding cho footer */
+}
+
+.cookie-modal button {
+    font-weight: bold; /* Chữ đậm cho các nút */
+    padding: 10px 20px; /* Padding cho nút */
+    border-radius: 5px; /* Bo tròn góc nút */
+    transition: background-color 0.3s, transform 0.2s; /* Hiệu ứng chuyển màu và thu phóng */
+}
+
+.cookie-modal button:hover {
+    background-color: rgba(0, 123, 255, 0.8); /* Màu nền khi hover (sử dụng màu xanh lam với độ trong suốt) */
+    color: white; /* Thay đổi màu chữ khi hover */
+    transform: scale(1.1); /* Tăng kích thước khi hover */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Thêm hiệu ứng chuyển đổi mượt mà */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ để tạo chiều sâu */
+}
+
+/* Hiệu ứng cho modal khi mở */
+.cookie-modal-enter {
+    opacity: 0; 
+    transform: scale(0.9);
+}
+.cookie-modal-enter-active {
+    opacity: 1; 
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
+}
+.cookie-modal-exit {
+    opacity: 1; 
+    transform: scale(1);
+}
+.cookie-modal-exit-active {
+    opacity: 0; 
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+}

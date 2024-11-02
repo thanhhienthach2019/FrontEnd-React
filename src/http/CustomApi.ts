@@ -14,7 +14,7 @@ export const SetupCustomApi = (store: any): AxiosInstance => {
     customApi.interceptors.request.use((config) => {
         const headers = config.headers
         if (headers) {
-            headers['Authorization'] = `Bearer ${localStorage.getItem('AccessToken')}`
+            headers['Authorization'] = `Bearer ${localStorage.getItem('_ACT_AUT')}`
         }
 
         return config

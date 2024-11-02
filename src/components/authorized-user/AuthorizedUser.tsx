@@ -40,7 +40,7 @@ const AuthorizedUser: FC<WithNetworkProps> = ({ authState, dispatch }: WithNetwo
             <h3>Authorized User </h3>
             {/* <h3>User {authState.userData?.dataSend.userData.userDto.email} Authorized</h3> */}
             <div>
-                {/* <button onClick={() => dispatch(getAllUsers())}>Get all users</button> */}
+                <button onClick={() => dispatch(getAllUsers())}>Get all users</button>
                 {userState.isLoading && <div>Loading users...</div>}
                 {userState.users && <ul>{usersArray}</ul>}
             </div>

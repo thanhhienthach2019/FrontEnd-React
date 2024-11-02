@@ -19,6 +19,7 @@
         "axios": "^0.27.2",
         "dotenv": "^16.4.5",
         "guid-typescript": "^1.0.9",
+        "js-cookie": "^3.0.5",
         "process": "^0.11.10",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
@@ -58,6 +59,7 @@
         ]
     },
     "devDependencies": {
+        "@types/js-cookie": "^3.0.6",
         "css-loader": "^7.1.2",
         "javascript-obfuscator": "^4.1.1",
         "style-loader": "^4.0.0",
